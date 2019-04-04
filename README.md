@@ -6,6 +6,7 @@
 - `log`: 日志文件
 - `app`: 各项目文件目录
 - `mysql`: mysql 数据
+- `postgres`: postgres 数据
 
 ## 使用
 - 在当前目录下运行 docker-compose up
