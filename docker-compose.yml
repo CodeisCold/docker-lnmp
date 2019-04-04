@@ -1,0 +1,38 @@
+# 需在docker-compose.yml所在目录下运行
+version: '3'
+services:
+  fpm:
+    image: s709067323/fpm:latest
+    volumes:
+      - "./app:/app"
+      - "./conf/fpm/php.ini:/usr/local/etc/php/php.ini:ro"
+      - "./conf/fpm/php-fpm.d/www.data:/usr/local/etc/php-fpm.d/www.conf:ro"
+      - "./log/fpm:/var/log/php-fpm"
+
+  nginx:
+    image: nginx:stable
+    ports:
+      - "80:80"
+      - "443:442"
+    volumes:
+      - "./app:/app"
+      - "./conf/nginx/conf.d:/etc/nginx/conf.d/"
+      - "./conf/nginx/nginx.conf:/etc/nginx/nginx.conf:ro"
+      - "./log/nginx:/var/log/nginx"
+
+  mysql:
+    image: mysql:5.7
+    command: "--innodb_use_native_aio=0" # win10 docker toolbox 下不加此命令无法启动
+    # restart: always
+    volumes:
+      - "./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro"
+      - "./mysql:/var/lib/mysql"
+      - "./log/mysql:/var/log/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+
+  redis:
+    image: redis:latest
+
+  # 用默认的
+  # network: 
