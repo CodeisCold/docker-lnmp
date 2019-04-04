@@ -24,6 +24,8 @@ services:
     image: mysql:5.7
     command: "--innodb_use_native_aio=0" # win10 docker toolbox 下不加此命令无法启动
     restart: always
+    ports:
+      - "3306:3306" # 方便客户端连接
     volumes:
       - "./conf/mysql/my.cnf:/etc/mysql/my.cnf:ro"
       - "./mysql:/var/lib/mysql"
@@ -37,6 +39,8 @@ services:
   postgres:
     image: postgres:10.7
     restart: always
+    ports:
+      - "5432:5432" # 方便客户端连接
     volumes:
       - "./conf/postgres/postgres.conf:/usr/share/postgresql/postgresql.conf:ro"
       - "./postgres:/var/lib/postgresql"
