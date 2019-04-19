@@ -48,6 +48,7 @@ services:
       - "./postgres:/var/lib/postgresql"
       - "./log/postgres:/var/log/postgresql"
     environment:
+      POSTGRES_USER: "root" # 必须是root，与bind的data目录所有者一致
       POSTGRES_PASSWORD: "123456"
 
   # 用默认的
