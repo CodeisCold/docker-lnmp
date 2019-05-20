@@ -10,3 +10,7 @@
 
 ## 使用
 - 在当前目录下运行 docker-compose up
+
+## 使用注意
+1. 先运行 `docker volume create --name postgres-volume` 用来给 postgres 数据持久化，防止`docker-compose down`后数据消失
+

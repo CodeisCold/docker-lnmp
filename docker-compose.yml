@@ -42,8 +42,8 @@ services:
       - "./log/mysql:/var/log/mysql"
     environment:
       MYSQL_ROOT_PASSWORD: "123456"
-    networks:
-      default:
+    # networks:
+    #   default:
 
   redis:
     image: redis:4.0
@@ -56,20 +56,23 @@ services:
       default:
 
   postgres:
-    image: postgres:10.7
-    # command: 'chmod 777 /var/lib/postgresql/data'
+    image: postgres:10
     restart: always
     ports:
       - "5432:5432" # 方便客户端连接
     volumes:
-      - "./conf/postgres/postgres.conf:/usr/share/postgresql/postgresql.conf:ro"
-      - "./postgres:/var/lib/postgresql"
+      - "./conf/postgres/postgres.conf:/usr/share/postgresql/postgresql.conf"
+      - "postgres-volume:/var/lib/postgresql/data" # 借助外部 volume 来实现数据持久化，避免 down 之后数据消失
       - "./log/postgres:/var/log/postgresql"
     environment:
-      POSTGRES_USER: "root" # 必须是root，与bind的data目录所有者一致
       POSTGRES_PASSWORD: "123456"
     networks:
       default:
 
 networks:
   default:
+
+volumes:
+  postgres-volume:
+    external: true
+  
