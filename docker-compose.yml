@@ -42,8 +42,8 @@ services:
       - "./log/mysql:/var/log/mysql"
     environment:
       MYSQL_ROOT_PASSWORD: "123456"
-    # networks:
-    #   default:
+    networks:
+      default:
 
   redis:
     image: redis:4.0
