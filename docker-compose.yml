@@ -69,10 +69,26 @@ services:
     networks:
       default:
 
+  mongo:
+      image: mongo:4.0
+      command: --config /etc/mongo/mongod.conf
+      restart: always
+      ports:
+        - "27017:27017"
+      volumes:
+        - "./conf/mongodb:/etc/mongo"
+        - "mongodb-volume:/data/db"
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: 123456
+      networks:
+        default:
+
 networks:
   default:
 
 volumes:
   postgres-volume:
     external: true
-  
+  mongodb-volume:
+    external: true
