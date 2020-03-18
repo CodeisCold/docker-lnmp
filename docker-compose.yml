@@ -16,8 +16,12 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "5100:5100"
+      - "5101:5101"
       - "7001:7001"
+      - "8001:8001"
       - "8018:8018"
+      - "10001-10100:10001-10100"
     volumes:
       - "./app:/app"
       - "./conf/nginx/conf.d:/etc/nginx/conf.d/"
@@ -29,6 +33,8 @@ services:
         aliases:
           - forum.test.com
           - p.test.com
+          - gmapi.com
+          - ninjapay.com
 
   mysql:
     image: mysql:5.7
@@ -70,19 +76,19 @@ services:
       default:
 
   mongo:
-      image: mongo:4.0
-      command: --config /etc/mongo/mongod.conf
-      restart: always
-      ports:
-        - "27017:27017"
-      volumes:
-        - "./conf/mongodb:/etc/mongo"
-        - "mongodb-volume:/data/db"
-      environment:
-        MONGO_INITDB_ROOT_USERNAME: root
-        MONGO_INITDB_ROOT_PASSWORD: 123456
-      networks:
-        default:
+    image: mongo:4.0
+    command: --config /etc/mongo/mongod.conf
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - "./conf/mongodb:/etc/mongo"
+      - "mongodb-volume:/data/db"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    networks:
+      default:
 
 networks:
   default:
